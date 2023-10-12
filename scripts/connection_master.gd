@@ -90,11 +90,17 @@ func start_player_stream():
 
 	print("Connecting to stream...")
 	var stream = StreamPeerTLS.new()
-	err = stream.connect_to_stream(tcp, host) #, TLSOptions.client_unsafe())
+	err = stream.connect_to_stream(tcp, host, TLSOptions.client())
 	print("Stream connect error: ", err)
 	assert(err == OK) # Make sure connection is OK.
-	stream.poll()
-	print("stream status: ", stream.get_status())
+	
+	while true:
+		stream.poll()
+		var status = stream.get_status()
+		print("stream status: ", status)
+		if status == StreamPeerTLS.STATUS_CONNECTED:
+			break
+		await get_tree().create_timer(0.1).timeout
 	
 	var request = "GET https://%s/players.json HTTP/1.1\n" % host
 	request += "Host: %s\n" % host
