@@ -650,7 +650,6 @@ metadata/_edit_lock_ = true
 position = Vector2(-6, -12)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
 position_smoothing_enabled = true
 
 [node name="ConnectionMaster" parent="." instance=ExtResource("6_hyeq0")]

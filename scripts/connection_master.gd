@@ -2,7 +2,7 @@ extends Node
 
 const Utils = preload("res://scripts/utils.gd")
 
-@onready var http = $HTTPRequest
+@onready var http: HTTPRequest = $HTTPRequest
 
 
 var host = "godot-firebase-test-game-default-rtdb.europe-west1.firebasedatabase.app"
@@ -90,7 +90,7 @@ func start_player_stream():
 
 	print("Connecting to stream...")
 	var stream = StreamPeerTLS.new()
-	err = stream.connect_to_stream(tcp, false, host, null)
+	err = stream.connect_to_stream(tcp, host) #, TLSOptions.client_unsafe())
 	print("Stream connect error: ", err)
 	assert(err == OK) # Make sure connection is OK.
 	stream.poll()
@@ -188,13 +188,13 @@ func delete_player(player_id: String):
 	http.cancel_request()
 #	await http.request_completed
 	http.request("%s/players/%s.json" % [base_url, player_id],
-		[], true, HTTPClient.METHOD_DELETE)
+		[], HTTPClient.METHOD_DELETE)
 	var response = await http.request_completed
 
 func write_player(player_id: String, data: Dictionary):
 	var json = JSON.new()
 	http.request("%s/players/%s.json" % [base_url, player_id],
-		[], true, HTTPClient.METHOD_PUT, json.stringify(data))
+		[], HTTPClient.METHOD_PUT, json.stringify(data))
 	var response = await http.request_completed
 
 func load_all_players():

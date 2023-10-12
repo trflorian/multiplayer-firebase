@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://owdx2lu1b0i2"]
+[gd_scene load_steps=28 format=3 uid="uid://owdx2lu1b0i2"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_0kg7p"]
 [ext_resource type="Texture2D" uid="uid://bg5t7hgqtutpa" path="res://assets/Characters/Basic Charakter Spritesheet.png" id="2_6euvj"]
@@ -234,8 +234,6 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_vey0n")
 states/Walk/position = Vector2(599, 100)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_spvvi"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_5kua3"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_s0onm")]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_7opc2"]
-
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 0
@@ -251,7 +249,6 @@ position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_i570e")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_speed = 0.0
 libraries = {
 "": SubResource("AnimationLibrary_0syrt")
 }
@@ -260,7 +257,6 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_5fcu7")
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_7opc2")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
