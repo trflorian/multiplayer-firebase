@@ -9,10 +9,13 @@ extends CharacterBody2D
 
 var target_pos = Vector2()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var dir = target_pos - position
 	
 	if dir.length() < 1:
+		position = target_pos
+		dir = Vector2()
+	elif dir.length() > 40:
 		position = target_pos
 		dir = Vector2()
 	else:
@@ -37,11 +40,11 @@ func pick_new_state():
 	else:
 		state_machine.travel("Idle")
 
-func set_target_position(position: Vector2):
-	target_pos = position
+func set_target_position(target_position: Vector2):
+	target_pos = target_position
 	
-func set_player_name(name: String):
-	label.text = name
+func set_player_name(player_name: String):
+	label.text = player_name
 
 func set_color(color: Color):
 	sprite.modulate = color

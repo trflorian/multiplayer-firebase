@@ -24,14 +24,14 @@ func _ready():
 	local_player_node.set_color(local_player_color)
 	local_player_node.set_player_name(local_player_id)
 	get_tree().set_auto_accept_quit(false)
-	await load_all_players()
+#	await load_all_players()
 	await connect_player()
 	start_player_stream()
 	start_write_player()
 #	start_player_loop()
 
 	
-func _process(delta):
+func _process(_delta):
 	var new_local_player = {
 		"id": local_player_id,
 		"px": local_player_node.position.x,
@@ -47,10 +47,6 @@ func _notification(what):
 	if (what == 1006):
 		await disconnect_player()
 		get_tree().quit()
-		
-#func start_player_loop():
-#	while(true):
-#		await get_players()
 
 func start_write_player():
 	while true:
@@ -124,6 +120,7 @@ func start_player_stream():
 						printerr("Non-ok status code received from stream request: ", response)
 					else:
 						print("Stream started listening!")
+						await load_all_players()
 				else :
 #					print(" --------  data:\n", response)
 					process_event(response)
@@ -173,11 +170,13 @@ func sync_players():
 			player_nodes[id] = node
 		
 		var pd = players[id]
-		if "px" in pd and "py" in pd:
-			player_nodes[id].set_target_position(Vector2(pd["px"], pd["py"]))
 		
-		if "col" in pd:
-			player_nodes[id].set_color(Color(pd["col"]))
+		if pd is Dictionary:
+			if "px" in pd and "py" in pd:
+				player_nodes[id].set_target_position(Vector2(pd["px"], pd["py"]))
+			
+			if "col" in pd:
+				player_nodes[id].set_color(Color(pd["col"]))
 			
 		player_nodes[id].set_player_name(id)
 #		player_nodes[id].position.x = 
@@ -195,13 +194,12 @@ func delete_player(player_id: String):
 #	await http.request_completed
 	http.request("%s/players/%s.json" % [base_url, player_id],
 		[], HTTPClient.METHOD_DELETE)
-	var response = await http.request_completed
+	var _response = await http.request_completed
 
 func write_player(player_id: String, data: Dictionary):
-	var json = JSON.new()
 	http.request("%s/players/%s.json" % [base_url, player_id],
-		[], HTTPClient.METHOD_PUT, json.stringify(data))
-	var response = await http.request_completed
+		[], HTTPClient.METHOD_PUT, JSON.stringify(data))
+	var _response = await http.request_completed
 
 func load_all_players():
 	var req = "%s/players.json" % base_url
