@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5wwrpyx5rgbn"]
+[gd_scene load_steps=13 format=3 uid="uid://c5wwrpyx5rgbn"]
 
 [ext_resource type="Texture2D" uid="uid://baqmd6aqjolcb" path="res://assets/Tilesets/ground tiles/new tiles/Grass hill tiles v.2.png" id="1_2n2lb"]
 [ext_resource type="Texture2D" uid="uid://dkenitexhawk4" path="res://assets/Tilesets/Water.png" id="2_8hhmr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://doemayqqnnpww" path="res://assets/Tilesets/ground tiles/old tiles/Grass.png" id="4_r5evh"]
 [ext_resource type="PackedScene" uid="uid://d2opnhjjr2ac4" path="res://scenes/player.tscn" id="5_1svus"]
 [ext_resource type="PackedScene" uid="uid://1kqtgv7qcjby" path="res://scenes/connection_master.tscn" id="6_hyeq0"]
+[ext_resource type="Script" path="res://scripts/player_manager.gd" id="7_pq7j6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bxl48"]
 texture = ExtResource("1_2n2lb")
@@ -653,5 +654,9 @@ position = Vector2(-6, -12)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
-[node name="ConnectionMaster" parent="." node_paths=PackedStringArray("local_player_node") instance=ExtResource("6_hyeq0")]
+[node name="ConnectionMaster" parent="." node_paths=PackedStringArray("player_manager") instance=ExtResource("6_hyeq0")]
+player_manager = NodePath("../PlayerManager")
+
+[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("local_player_node")]
+script = ExtResource("7_pq7j6")
 local_player_node = NodePath("../Player")

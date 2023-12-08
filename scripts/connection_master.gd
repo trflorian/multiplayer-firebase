@@ -5,10 +5,8 @@ const base_url = "https://%s" % host
 const Utils = preload("res://scripts/utils.gd")
 
 @onready var http: HTTPRequest = $HTTPRequest
-@export var local_player_node : CharacterBody2D
+@export var player_manager: PlayerManager
 
-var local_player_id = Utils.generate_random_player_name()
-var local_player_color = Utils.generate_random_player_color()
 var last_time_stamp = 0
 
 var players = {}
@@ -19,8 +17,6 @@ var local_player = {}
 var local_player_buffer = []
 
 func _ready():
-	local_player_node.set_color(local_player_color)
-	local_player_node.set_player_name(local_player_id)
 	get_tree().set_auto_accept_quit(false)
 	
 	await connect_player()
@@ -30,10 +26,10 @@ func _ready():
 	
 func _process(_delta):
 	var new_local_player = {
-		"id": local_player_id,
-		"px": local_player_node.position.x,
-		"py": local_player_node.position.y,
-		"col": local_player_color.to_html()
+		"id": player_manager.local_player_id,
+		"px": player_manager.local_player_node.position.x,
+		"py": player_manager.local_player_node.position.y,
+		"col": player_manager.local_player_color.to_html()
 	}
 	if new_local_player.hash() != local_player.hash():
 		local_player = new_local_player
@@ -49,23 +45,20 @@ func start_write_player():
 		if local_player_buffer.size() > 0:
 			var curr_player_data = local_player_buffer[local_player_buffer.size() -1]
 			local_player_buffer.clear()
-			await write_player(local_player_id, curr_player_data)
+			await write_player(player_manager.local_player_id, curr_player_data)
 		await get_tree().process_frame
 
 func connect_player():
-	print("Initializing player '%s' ..." % local_player_id)
+	print("Initializing player '%s' ..." % player_manager.local_player_id)
 	var player = {
-		"id": local_player_id,
-#		"timestamp": {
-#			".sv": "timestamp"
-#		}
+		"id": player_manager.local_player_id,
 	}
-	await write_player(local_player_id, player)
+	await write_player(player_manager.local_player_id, player)
 	print("Player initialized!")
 	
 func disconnect_player():
-	print("Disconnecting player '%s' ..." % local_player_id)
-	await delete_player(local_player_id)
+	print("Disconnecting player '%s' ..." % player_manager.local_player_id)
+	await delete_player(player_manager.local_player_id)
 	print("Player disconnected!")
 	
 	
@@ -144,7 +137,8 @@ func process_event(event_data: String):
 		if id == "":
 			return
 		
-		if id == local_player_id:
+		# ignore local player
+		if id == player_manager.local_player_id:
 			return
 		
 		if id not in players:
@@ -158,11 +152,9 @@ func process_event(event_data: String):
 		sync_players()
 	
 func sync_players():
-	
 	for id in players:
 		if id not in player_nodes:
-			var node = load("res://scenes/enemy.tscn").instantiate()
-			add_child(node)
+			var node: Enemy = player_manager.spawn_enemy()
 			player_nodes[id] = node
 		
 		var pd = players[id]
@@ -175,8 +167,6 @@ func sync_players():
 				player_nodes[id].set_color(Color(pd["col"]))
 			
 		player_nodes[id].set_player_name(id)
-#		player_nodes[id].position.x = 
-#		player_nodes[id].position.y = players[id]["py"]
 		
 	for id in player_nodes:
 		if id not in players:
@@ -186,8 +176,8 @@ func sync_players():
 	
 	
 func delete_player(player_id: String):
+	local_player_buffer.clear()
 	http.cancel_request()
-#	await http.request_completed
 	http.request("%s/players/%s.json" % [base_url, player_id],
 		[], HTTPClient.METHOD_DELETE)
 	var _response = await http.request_completed
@@ -208,20 +198,8 @@ func load_all_players():
 	
 	if data != null:
 		for player_id in data:
-			if player_id != local_player_id:
+			if player_id != player_manager.local_player_id:
 				players[player_id] = data[player_id]
 				
 	print("loaded players: ", players)
 	sync_players()
-		
-func read_player(player_id: String):
-	var req = "%s/players/%s.json" % [base_url, player_id]
-	print(req)
-	http.request(req)
-	var response = await http.request_completed
-	# result, status code, response headers, and body are now in indices 0, 1, 2, and 3 of response
-
-	var json = JSON.new()
-	json.parse(response[3].get_string_from_utf8())
-	var data = json.get_data()
-	print("read player: %s" % data)

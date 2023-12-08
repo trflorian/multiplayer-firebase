@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 const RANDOM_SPAWN_RADIUS: float = 100
 
 @export var move_speed : float = 100
