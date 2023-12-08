@@ -1,9 +1,11 @@
 # Godot Firebase Multiplayer
 
-An attempt at using Firebase Realtime Database in Godot 4.0 for player state snychronization between clients.
+An attempt at using Firebase Realtime Database in Godot 4 for player state snychronization between clients.
 
-![image](https://user-images.githubusercontent.com/27728267/210118795-6b074edc-bc22-4187-802e-64f093a0f2ff.png)
+![image](https://github.com/trflorian/multiplayer-firebase/assets/27728267/405fbfbc-b3a5-41ef-83a6-3393edcc23e8)
 
-## Game Art
+## 🎬 Youtube Showcase
+https://www.youtube.com/watch?v=O1x8iLYp0Cg
 
+## 🎨 Assets
 Credits: https://cupnooble.itch.io/
