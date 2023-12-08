@@ -7,13 +7,10 @@ const Utils = preload("res://scripts/utils.gd")
 @onready var http: HTTPRequest = $HTTPRequest
 @export var player_manager: PlayerManager
 
-var last_time_stamp = 0
-
 var players = {}
 var player_nodes = {}
 
 var local_player = {}
-
 var local_player_buffer = []
 
 func _ready():
@@ -23,7 +20,6 @@ func _ready():
 	start_player_stream()
 	start_write_player()
 
-	
 func _process(_delta):
 	var new_local_player = {
 		"id": player_manager.local_player_id,
@@ -34,7 +30,7 @@ func _process(_delta):
 	if new_local_player.hash() != local_player.hash():
 		local_player = new_local_player
 		local_player_buffer.append(new_local_player)
-	
+
 func _notification(what):
 	if (what == NOTIFICATION_WM_CLOSE_REQUEST):
 		await disconnect_player()
@@ -55,12 +51,11 @@ func connect_player():
 	}
 	await write_player(player_manager.local_player_id, player)
 	print("Player initialized!")
-	
+
 func disconnect_player():
 	print("Disconnecting player '%s' ..." % player_manager.local_player_id)
 	await delete_player(player_manager.local_player_id)
 	print("Player disconnected!")
-	
 	
 func start_player_stream():
 	print("Connecting to host...")
@@ -111,15 +106,14 @@ func start_player_stream():
 						print("Stream started listening!")
 						await load_all_players()
 				else :
-#					print(" --------  data:\n", response)
 					process_event(response)
-					
+				
 				initialRequest = true
 		await get_tree().process_frame
 	
 	stream.disconnect_from_stream()
 	tcp.disconnect_from_host()
-	
+
 func process_event(event_data: String):
 	var lines = event_data.replace(" ", "").split("\n")
 	var event = lines[0].split("event:")[1]
@@ -150,7 +144,7 @@ func process_event(event_data: String):
 		else:
 			players[id] = jsonData["data"]
 		sync_players()
-	
+
 func sync_players():
 	for id in players:
 		if id not in player_nodes:
@@ -173,8 +167,7 @@ func sync_players():
 			player_nodes[id].queue_free()
 			player_nodes.erase(id)
 			break
-	
-	
+
 func delete_player(player_id: String):
 	local_player_buffer.clear()
 	http.cancel_request()
