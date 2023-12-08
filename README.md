@@ -8,4 +8,4 @@ An attempt at using Firebase Realtime Database in Godot 4 for player state snych
 https://www.youtube.com/watch?v=O1x8iLYp0Cg
 
 ## 🎨 Assets
-Credits: https://cupnooble.itch.io/
+https://cupnooble.itch.io/
