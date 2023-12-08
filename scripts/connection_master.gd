@@ -1,12 +1,11 @@
 extends Node
 
+const host = "godot-firebase-test-game-default-rtdb.europe-west1.firebasedatabase.app"
+const base_url = "https://%s" % host
 const Utils = preload("res://scripts/utils.gd")
 
 @onready var http: HTTPRequest = $HTTPRequest
-
-
-var host = "godot-firebase-test-game-default-rtdb.europe-west1.firebasedatabase.app"
-var base_url = "https://%s" % host
+@export var local_player_node : CharacterBody2D
 
 var local_player_id = Utils.generate_random_player_name()
 var local_player_color = Utils.generate_random_player_color()
@@ -15,7 +14,6 @@ var last_time_stamp = 0
 var players = {}
 var player_nodes = {}
 
-@onready var local_player_node : CharacterBody2D = get_node("/root/GameLevel/Player")
 var local_player = {}
 
 var local_player_buffer = []
@@ -24,11 +22,10 @@ func _ready():
 	local_player_node.set_color(local_player_color)
 	local_player_node.set_player_name(local_player_id)
 	get_tree().set_auto_accept_quit(false)
-#	await load_all_players()
+	
 	await connect_player()
 	start_player_stream()
 	start_write_player()
-#	start_player_loop()
 
 	
 func _process(_delta):
@@ -43,8 +40,7 @@ func _process(_delta):
 		local_player_buffer.append(new_local_player)
 	
 func _notification(what):
-	# MainLoop.NOTIFICATION_WM_CLOSE_REQUEST
-	if (what == 1006):
+	if (what == NOTIFICATION_WM_CLOSE_REQUEST):
 		await disconnect_player()
 		get_tree().quit()
 

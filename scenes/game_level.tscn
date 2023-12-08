@@ -653,4 +653,5 @@ position = Vector2(-6, -12)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
-[node name="ConnectionMaster" parent="." instance=ExtResource("6_hyeq0")]
+[node name="ConnectionMaster" parent="." node_paths=PackedStringArray("local_player_node") instance=ExtResource("6_hyeq0")]
+local_player_node = NodePath("../Player")
