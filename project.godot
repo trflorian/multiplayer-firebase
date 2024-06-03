@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Multiplayer Firebase"
 run/main_scene="res://scenes/game_level.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
