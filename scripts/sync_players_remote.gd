@@ -11,7 +11,7 @@ func _ready() -> void:
 	_setup_connection()
 
 func _setup_connection() -> void:
-	http_client.connect_to_host(FirebaseUrls.HOST)
+	http_client.connect_to_host(FirebaseUrls.HOST, FirebaseUrls.PORT)
 	
 	var status = http_client.get_status()
 	while status in [HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_RESOLVING]:
@@ -23,8 +23,8 @@ func _setup_connection() -> void:
 		return
 	
 	http_client.request(
-		HTTPClient.METHOD_POST,
-		FirebaseUrls.get_all_players_url(),
+		HTTPClient.METHOD_GET,
+		FirebaseUrls.get_all_players_path(),
 		["Accept: text/event-stream"],
 	)
 	
@@ -89,6 +89,8 @@ func _delete_player(player_id: String) -> void:
 	
 	var player = players_remote[player_id]
 	player.queue_free()
+	
+	players_remote.erase(player_id)
 
 func _parse_response_event_data(response: String) -> Array[Dictionary]:
 	var response_parts = response.replace("\r", "").split("\n\n")
