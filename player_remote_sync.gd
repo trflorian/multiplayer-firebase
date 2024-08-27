@@ -6,6 +6,11 @@ const EVENT_DATA_PREFIX = "data: "
 class EventData:
 	var type: String
 	var data: Dictionary
+	
+@export var player_remote_scene: PackedScene
+
+@export var player_local: PlayerLocal
+var players_remote: Dictionary = {}
 
 func _ready() -> void:
 	_start_listening()
@@ -18,9 +23,52 @@ func _start_listening() -> void:
 	
 	while true:
 		var response = await _read_stream_response(stream)
-		var events = _parse_response_event_data(response)
+		var events = _parse_response_event_data(response) as Array[Dictionary]
 		for event in events:
-			print(event)
+			_handle_player_event(event)
+
+func _create_or_update_player(player_id: String, player_data: Dictionary):
+	if player_id == str(player_local.player_id):
+		return
+		
+	var player: PlayerRemote
+	if player_id in players_remote:
+		player = players_remote[player_id]
+	else:
+		player = player_remote_scene.instantiate()
+		get_parent().add_child(player)
+		
+	player.update_from_event(player_data)
+	players_remote[player_id] = player
+	
+func _delete_player(player_id: String):
+	if player_id == str(player_local.player_id):
+		return
+	
+	if player_id not in players_remote:
+		return
+		
+	var player = players_remote[player_id] as PlayerRemote
+	player.queue_free()
+
+func _handle_player_event(event: Dictionary):
+	var path = event["path"] as String
+	var data = event["data"]
+	
+	if path == "/":
+		if data != null:
+			for player_id in data.keys():
+				_create_or_update_player(player_id, data[player_id])
+		for player_id in players_remote.keys():
+			if data == null or player_id not in data.keys():
+				_delete_player(player_id)
+	else:
+		var path_parts = path.split("/")
+		var player_id = path_parts[-1]
+		if data != null:
+			_create_or_update_player(player_id, data)
+		else:
+			_delete_player(player_id)
 
 func _setup_tcp_stream() -> StreamPeerTCP:
 	var tcp = StreamPeerTCP.new()

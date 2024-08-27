@@ -44,6 +44,7 @@ func _notification(what) -> void:
 func _delete_local_player() -> void:
 	var url = FirebaseUrls.get_player_url(player.player_id)
 	cancel_request()
+	is_request_pending = true
 	request(url, [], HTTPClient.METHOD_DELETE, "")
 	await request_completed
 	get_tree().quit()
