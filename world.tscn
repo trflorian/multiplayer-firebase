@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvevpdhamme43"]
+
+[ext_resource type="Script" path="res://player_local.gd" id="1_lrlno"]
+[ext_resource type="Texture2D" uid="uid://bc2j5ml8vi6j7" path="res://icon.svg" id="1_mvbqk"]
+[ext_resource type="Script" path="res://player_local_sync.gd" id="3_y764b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u7bi"]
+size = Vector2(128, 128)
+
+[node name="World" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_lrlno")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_mvbqk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_0u7bi")
+
+[node name="PlayerLocalSync" type="HTTPRequest" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_y764b")
+player = NodePath("../Player")
