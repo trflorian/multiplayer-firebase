@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://1kqtgv7qcjby"]
-
-[ext_resource type="Script" path="res://scripts/connection_master.gd" id="1_md0yp"]
-
-[node name="ConnectionMaster" type="Node"]
-script = ExtResource("1_md0yp")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]

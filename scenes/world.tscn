@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1e35crpgfu7n"]
+
+[ext_resource type="PackedScene" uid="uid://c437vqg6y4gfp" path="res://scenes/player_local.tscn" id="1_2haq7"]
+[ext_resource type="Script" path="res://scripts/sync_player_local.gd" id="3_6aduq"]
+[ext_resource type="Script" path="res://scripts/sync_players_remote.gd" id="4_if6ru"]
+[ext_resource type="PackedScene" uid="uid://b77lw4x6e23qt" path="res://scenes/player_remote.tscn" id="5_e30bm"]
+
+[node name="World" type="Node2D"]
+
+[node name="PlayerLocal" parent="." instance=ExtResource("1_2haq7")]
+
+[node name="SyncPlayerLocal" type="HTTPRequest" parent="." node_paths=PackedStringArray("player")]
+use_threads = true
+script = ExtResource("3_6aduq")
+player = NodePath("../PlayerLocal")
+
+[node name="SyncPlayersRemote" type="Node2D" parent="." node_paths=PackedStringArray("player_local")]
+script = ExtResource("4_if6ru")
+player_local = NodePath("../PlayerLocal")
+player_remote_scene = ExtResource("5_e30bm")

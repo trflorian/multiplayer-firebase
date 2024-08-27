@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg5t7hgqtutpa"
-path="res://.godot/imported/Basic Charakter Spritesheet.png-8fde2fc1f26f1c940a07d78242aa6424.ctex"
+uid="uid://ctl7pxau5djkg"
+path="res://.godot/imported/Hills.png-f88f03166982ea8ca6631a081e61e7e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters/Basic Charakter Spritesheet.png"
-dest_files=["res://.godot/imported/Basic Charakter Spritesheet.png-8fde2fc1f26f1c940a07d78242aa6424.ctex"]
+source_file="res://assets/Hills.png"
+dest_files=["res://.godot/imported/Hills.png-f88f03166982ea8ca6631a081e61e7e8.ctex"]
 
 [params]
 

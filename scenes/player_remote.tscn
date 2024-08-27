@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b77lw4x6e23qt"]
+
+[ext_resource type="PackedScene" uid="uid://cfm8nl10s04u4" path="res://scenes/player.tscn" id="1_43rbd"]
+[ext_resource type="Script" path="res://scripts/player_remote.gd" id="1_srubm"]
+
+[node name="PlayerRemote" instance=ExtResource("1_43rbd")]
+script = ExtResource("1_srubm")
