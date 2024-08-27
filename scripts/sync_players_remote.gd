@@ -24,7 +24,7 @@ func _setup_connection() -> void:
 	
 	http_client.request(
 		HTTPClient.METHOD_GET,
-		FirebaseUrls.get_all_players_path(),
+		FirebaseUrls.get_all_players_route(),
 		["Accept: text/event-stream"],
 	)
 	
