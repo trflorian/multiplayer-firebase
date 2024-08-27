@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://beh6lvsnaewv5"]
 
-[ext_resource type="Script" path="res://player_remote.gd" id="1_8g1hr"]
+[ext_resource type="Script" path="res://scripts/player_remote.gd" id="1_8g1hr"]
 [ext_resource type="Texture2D" uid="uid://rhxoj3ph83bb" path="res://assets/Basic Charakter Spritesheet.png" id="2_pxawo"]
-[ext_resource type="Script" path="res://player_animation.gd" id="3_hr7c1"]
+[ext_resource type="Script" path="res://scripts/player_animation.gd" id="3_hr7c1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8sn7w"]
 size = Vector2(14, 10)

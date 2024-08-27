@@ -12,7 +12,7 @@ var target_pos: Vector2
 
 var is_initialized: bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var diff = target_pos - global_position
 		
 	if diff.length() < 1:
@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 		move_and_slide()
 
 func update_from_event(player_data: Dictionary) -> void:
-	player_id = str(player_data["player_id"])
+	player_id = str(player_data["id"])
 	color = Color.html(player_data["color"])
 	sprite.modulate = color
 	_move_to_target(player_data["position_x"], player_data["position_y"])

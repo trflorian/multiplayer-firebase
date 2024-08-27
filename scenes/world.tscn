@@ -1,16 +1,16 @@
 [gd_scene load_steps=13 format=3 uid="uid://dvevpdhamme43"]
 
-[ext_resource type="Script" path="res://player_local.gd" id="1_lrlno"]
-[ext_resource type="PackedScene" uid="uid://beh6lvsnaewv5" path="res://player_remote.tscn" id="3_72bxh"]
-[ext_resource type="Script" path="res://player_local_sync.gd" id="3_y764b"]
-[ext_resource type="Script" path="res://player_remote_sync.gd" id="4_321a6"]
-[ext_resource type="Texture2D" uid="uid://rhxoj3ph83bb" path="res://assets/Basic Charakter Spritesheet.png" id="4_jkkqs"]
-[ext_resource type="Script" path="res://player_animation.gd" id="5_v32yq"]
-[ext_resource type="Texture2D" uid="uid://c14ykrx7qa2mn" path="res://assets/Grass.png" id="6_1m4cx"]
-[ext_resource type="Texture2D" uid="uid://cj7hywfud20rb" path="res://assets/Water.png" id="7_1p2j6"]
+[ext_resource type="Texture2D" uid="uid://c14ykrx7qa2mn" path="res://assets/Grass.png" id="1_xs5k7"]
+[ext_resource type="Texture2D" uid="uid://cj7hywfud20rb" path="res://assets/Water.png" id="2_sk18d"]
+[ext_resource type="Script" path="res://scripts/player_local.gd" id="3_5nnkp"]
+[ext_resource type="Texture2D" uid="uid://rhxoj3ph83bb" path="res://assets/Basic Charakter Spritesheet.png" id="4_52f8w"]
+[ext_resource type="Script" path="res://scripts/player_animation.gd" id="5_2ja3u"]
+[ext_resource type="Script" path="res://scripts/player_local_sync.gd" id="6_fb58q"]
+[ext_resource type="Script" path="res://scripts/player_remote_sync.gd" id="7_757n5"]
+[ext_resource type="PackedScene" uid="uid://beh6lvsnaewv5" path="res://scenes/player_remote.tscn" id="8_qwje0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uo8ei"]
-texture = ExtResource("6_1m4cx")
+texture = ExtResource("1_xs5k7")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -460,7 +460,7 @@ texture = ExtResource("6_1m4cx")
 2:1/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pir4i"]
-texture = ExtResource("7_1p2j6")
+texture = ExtResource("2_sk18d")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -498,14 +498,14 @@ layer_1/tile_data = PackedInt32Array(2097177, 131073, 2, 2031641, 131073, 1, 196
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
 position = Vector2(544, 334)
-script = ExtResource("1_lrlno")
+script = ExtResource("3_5nnkp")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("4_jkkqs")
+texture = ExtResource("4_52f8w")
 hframes = 4
 vframes = 4
-script = ExtResource("5_v32yq")
+script = ExtResource("5_2ja3u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 7)
@@ -516,10 +516,10 @@ zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
 [node name="PlayerLocalSync" type="HTTPRequest" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("3_y764b")
+script = ExtResource("6_fb58q")
 player = NodePath("../Player")
 
 [node name="PlayerRemoteSync" type="Node" parent="." node_paths=PackedStringArray("player_local")]
-script = ExtResource("4_321a6")
-player_remote_scene = ExtResource("3_72bxh")
+script = ExtResource("7_757n5")
+player_remote_scene = ExtResource("8_qwje0")
 player_local = NodePath("../Player")

@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 func _send_local_player() -> void:
 	var url = FirebaseUrls.get_player_url(player.player_id)
 	var player_data = {
-		"player_id": player.player_id,
+		"id": player.player_id,
 		"position_x": player.global_position.x,
 		"position_y": player.global_position.y,
 		"color": player.player_color.to_html(false)
