@@ -22,7 +22,7 @@ func _delete_local_player() -> void:
 
 func _on_request_completed(
 	result: int,
-	response_code: int,
+	_response_code: int,
 	_headers: PackedStringArray,
 	_body: PackedByteArray,
 ) -> void:

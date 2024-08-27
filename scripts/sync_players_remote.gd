@@ -38,6 +38,9 @@ func _check_for_new_events() -> void:
 	if not http_client.has_response():
 		return
 	
+	if not http_client.get_status() == HTTPClient.STATUS_BODY:
+		return
+	
 	var body = http_client.read_response_body_chunk()
 	if not body:
 		return
