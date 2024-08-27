@@ -7,7 +7,7 @@ const MOVE_SPEED: float = 200
 var player_id: int = randi_range(100000, 999999)
 var player_color: Color = Color.from_hsv(randf(), 1.0, 1.0)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var dx = Input.get_axis("move_left", "move_right")
 	var dy = Input.get_axis("move_up", "move_down")
 	

@@ -13,17 +13,13 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 		printerr("request failed with response code %d" % response_code)
 	is_request_pending = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !is_request_pending:
 		_send_local_player()
-
-func _get_player_url() -> String:
-	const host = "https://godot-multiplayer-firebase-default-rtdb.europe-west1.firebasedatabase.app"
-	var path_player = "/players/%s.json" % player.player_id
-	return host + path_player
+	#pass
 
 func _send_local_player() -> void:
-	var url = _get_player_url()
+	var url = FirebaseUrls.get_player_url(player.player_id)
 	var player_data = {
 		"player_id": player.player_id,
 		"position_x": player.global_position.x,
@@ -46,7 +42,7 @@ func _notification(what) -> void:
 		_delete_local_player()
 
 func _delete_local_player() -> void:
-	var url = _get_player_url()
+	var url = FirebaseUrls.get_player_url(player.player_id)
 	cancel_request()
 	request(url, [], HTTPClient.METHOD_DELETE, "")
 	await request_completed

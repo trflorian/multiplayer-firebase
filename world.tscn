@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvevpdhamme43"]
+[gd_scene load_steps=6 format=3 uid="uid://dvevpdhamme43"]
 
 [ext_resource type="Script" path="res://player_local.gd" id="1_lrlno"]
 [ext_resource type="Texture2D" uid="uid://bc2j5ml8vi6j7" path="res://icon.svg" id="1_mvbqk"]
 [ext_resource type="Script" path="res://player_local_sync.gd" id="3_y764b"]
+[ext_resource type="Script" path="res://player_remote_sync.gd" id="4_321a6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0u7bi"]
 size = Vector2(128, 128)
@@ -21,3 +22,6 @@ shape = SubResource("RectangleShape2D_0u7bi")
 [node name="PlayerLocalSync" type="HTTPRequest" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("3_y764b")
 player = NodePath("../Player")
+
+[node name="PlayerRemoteSync" type="Node" parent="."]
+script = ExtResource("4_321a6")
