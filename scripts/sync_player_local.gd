@@ -40,7 +40,7 @@ func _send_local_player() -> void:
 		"position_x": player.global_position.x,
 		"position_y": player.global_position.y,
 		"color": player.player_color.to_html(false),
-		"timestamp": Time.get_unix_time_from_system(),
+		#"timestamp": Time.get_unix_time_from_system(),
 	}
 
 	var player_data_json = JSON.stringify(player_data)

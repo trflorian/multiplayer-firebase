@@ -11,7 +11,7 @@ func _ready() -> void:
 	_setup_connection()
 
 func _setup_connection() -> void:
-	http_client.connect_to_host(FirebaseUrls.HOST, 8080)
+	http_client.connect_to_host(FirebaseUrls.HOST)
 	
 	var status = http_client.get_status()
 	while status in [HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_RESOLVING]:
