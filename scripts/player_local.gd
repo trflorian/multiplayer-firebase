@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name PlayerLocal
 
-const SPAWN_RADIUS: float = 200
+const SPAWN_RADIUS: float = 100
 const MOVE_SPEED: float = 200
 
 var player_id: int = randi_range(100000, 999999)
