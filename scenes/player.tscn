@@ -4,9 +4,10 @@
 [ext_resource type="Script" path="res://scripts/player_animation.gd" id="3_d5pqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3k8en"]
-size = Vector2(12, 16)
+size = Vector2(8, 3)
 
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
 motion_mode = 1
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
@@ -33,4 +34,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_3k8en")
